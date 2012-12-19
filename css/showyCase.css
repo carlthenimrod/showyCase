@@ -1,0 +1,75 @@
+/* =Global
+----------------------------------------------- */
+.sc-clear-float{
+	clear: both;
+}
+
+/* =showyCase
+----------------------------------------------- */
+.sc-ctn{
+	background: #f8f8f8 url(../img/sc-bg.jpg) center center no-repeat;
+	display: none;
+	height: 480px;
+	margin: 0 auto;
+	position: relative;
+	width: 960px;
+	z-index: 2;
+}
+.sc-prev{
+	background: url(../img/sc-left-arrow.png) center center no-repeat;
+	cursor: pointer;
+	float: left;
+	height: 480px;
+	padding: 0 0 0 50px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;	
+	width: 25px;
+}
+.sc-prev:hover{
+	background: url(../img/sc-left-arrow-hover.png) center center no-repeat;
+}
+.sc-next{
+	background: url(../img/sc-right-arrow.png) center center no-repeat;
+	cursor: pointer;	
+	float: right;
+	height: 480px;
+	padding: 0 50px 0 0;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	width: 25px;
+}
+.sc-next:hover{
+	background: url(../img/sc-right-arrow-hover.png) center center no-repeat;
+}
+.sc-thumbs ul{
+	list-style-position: inside;
+	list-style-type: none;
+	margin: 0 auto;
+	padding: 70px 0 0 0;
+	position: relative;
+	width: 720px;
+	z-index: 9998;
+}
+.sc-thumbs li{
+	float: left;
+	margin: 0 10px 20px 10px;
+	position: relative;
+}
+.sc-thumbs a{
+	background-color: #000;
+	color: #444444;
+	display: block;
+	height: 100px;
+	font-family: Arial, sans-serif, Helvetica;
+	overflow: hidden;
+	text-align: center;
+	width: 100px;
+}
+.sc-thumbs a img{
+	height: 100%;
+	width: 100%;
+}
