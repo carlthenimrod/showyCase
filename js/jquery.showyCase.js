@@ -202,7 +202,7 @@
 				//find selected
 				selected = that.utils.formatText(el.find('a').attr('title'));
 
-				window.location.href = 'gallery.html?selected=' + selected;
+				window.location.href = 'gallery.php?selected=' + selected;
 			}
 			else{
 
