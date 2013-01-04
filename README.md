@@ -6,7 +6,7 @@ showyCase dynamically generates a showcase based on a JSON file that categorizes
 
 ### Release info:
 
-The current release is version 0.5. This is the inital release and more features and updates are planned.
+The current release is version 0.7. This is the inital release and more features and updates are planned.
 
 
 ### Examples:
@@ -67,6 +67,16 @@ List of renameable CSS selectors with their default values:
 	$('#element').showyCase({
 		html5: true
 	});
+
+**onItemClick**: Accepts a string, determines the action to take place on thumb click, defaults to false
+
+	$('#element').showyCase({
+		onItemClick: false
+	});
+
+List of selectable strings (more options coming)
+
+	- 'blurbGallery' : Sends to 'gallery.html' in same directory with PHP variable to be processed by blurbGallery plugin.
 
 **pages**: Accepts a object, contains options for the pagination system, show controls if pages are used altogether, per controls how many items per page.
 

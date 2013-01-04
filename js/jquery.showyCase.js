@@ -1,7 +1,7 @@
 /*!
  * jQuery showyCase Plugin
  * Author: Carl Dawson
- * Version: 0.5
+ * Version: 0.7
  */
 ;(function($, win, doc, undefined){
 
@@ -51,7 +51,7 @@
 			ajax: {
 				cache: false,
 				dataType: 'json',
-				dataUrl: 'json/jquery.showyCase.json'
+				dataUrl: 'json/jquery.items.json'
 			},
 			
 			classNames: {
@@ -62,6 +62,8 @@
 				ctrlNext: 'sc-next',
 				thumbs: 'sc-thumbs'
 			},
+
+			onItemClick: false,
 
 			html5: true,
 
@@ -100,7 +102,7 @@
 			.then(function(data){
 
 				//set data variable
-				that.data = data.showyCase;
+				that.data = data.items;
 
 				//find all items, store in items
 				that.items = that.utils.findAllItems(that.data);
@@ -175,12 +177,38 @@
 
 				//create pop-up
 				that.eventCreatePopUp();
-			});	
+			});
+
+			that.modules.thumbs.on('click', 'li', function(e){
+
+				//click event
+				that.eventClick($(this));
+
+				//prevent default
+				e.preventDefault();
+			});			
 		},
 
 		eventCreatePopUp: function(){
-
 		},
+
+		eventClick: function(el){
+
+			var that = this,
+				selected;
+
+			if(that.config.onImgClick == 'blurbGallery'){
+
+				//find selected
+				selected = that.utils.formatText(el.find('a').attr('title'));
+
+				window.location.href = 'gallery.html?selected=' + selected;
+			}
+			else{
+
+				window.location.href = el.find('a').attr('href');
+			}
+		},		
 
 		eventRefreshThumbs: function(){
 
@@ -507,7 +535,7 @@
 				//replace spaces with underscore, remove other misc characters
 				str = str.replace(/ /g, '_');
 				str = str.replace(/&/g, 'and');
-				str = str.replace(/[^a-z_]/g, '');
+				str = str.replace(/[^a-z0-9_]/g, '');
 
 				return str;
 			},
