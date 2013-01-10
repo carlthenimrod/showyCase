@@ -29,7 +29,7 @@
 					that.events();
 
 					//fade in ctn
-					that.modules.ctn.fadeIn(that.config.speed.load);					
+					that.modules.ctn.fadeIn(that.config.speedLoad);					
 
 				}, function(){
 
@@ -48,42 +48,23 @@
 	
 		defaults: {
 
-			ajax: {
-				cache: false,
-				dataType: 'json',
-				dataUrl: 'json/jquery.items.json'
-			},
-			
-			classNames: {
-
-				ctn: 'sc-ctn',
-				ctrl: 'sc-ctrl',
-				ctrlPrev: 'sc-prev',
-				ctrlNext: 'sc-next',
-				thumbs: 'sc-thumbs'
-			},
-
+			ajaxCache: false,
+			ajaxDataType: 'json',
+			ajaxDataUrl: 'json/jquery.items.json',
+			classCtn: 'sc-ctn',
+			classCtrl: 'sc-ctrl',
+			classPrev: 'sc-prev',
+			classNext: 'sc-next',
+			classThumbs: 'sc-thumbs',
 			onItemClick: false,
-
 			html5: true,
-
-			pages: {
-
-				show: 18,
-				start: 0
-			},
-
-			path: {
-				full: false,
-				root: 'img/',
-				thumbs: 'img/thumbs/'
-			},
-
-			speed: {
-
-				load: 300,
-				transition: 150
-			}		
+			pageShow: 18,
+			pageStart: 0,
+			pathFull: false,
+			pathRoot: 'img/',
+			pathThumbs: 'img/thumbs/',
+			speedLoad: 300,
+			speedTransition: 150	
 		},
 
 		load: function(){
@@ -95,9 +76,9 @@
 			$.ajax({
 
 				//ajax config
-				cache: that.config.ajax.cache,
-				dataType: that.config.ajax.dataType,
-				url: that.config.ajax.dataUrl
+				cache: that.config.ajaxCache,
+				dataType: that.config.ajaxDataType,
+				url: that.config.ajaxDataUrl
 			})
 			.then(function(data){
 
@@ -128,7 +109,7 @@
 			$.when(that.render()).then(function(){			
 				
 				//fade in $elem
-				that.$elem.fadeIn(that.config.speed.load, function(){
+				that.$elem.fadeIn(that.config.speedLoad, function(){
 
 					dfd.resolve();
 				});
@@ -225,7 +206,7 @@
 
 			that.animating = $.Deferred();
 
-			that.modules.thumbs.fadeOut(that.config.speed.transition, function(){
+			that.modules.thumbs.fadeOut(that.config.speedTransition, function(){
 
 				//empty thumbs
 				that.modules.thumbs.empty();
@@ -249,16 +230,16 @@
 					for(i = 0, l = items.length; i < l; ++i){
 
 						//if thumbs image path exists
-						if(that.config.path.thumbs){
+						if(that.config.pathThumbs){
 
-							src = that.config.path.thumbs + items[i].img;
+							src = that.config.pathThumbs + items[i].img;
 						}
 						else{
 
-							src = that.config.path.root + items[i].img;
+							src = that.config.pathRoot + items[i].img;
 						}
 
-						href = that.config.path.root + items[i].img;
+						href = that.config.pathRoot + items[i].img;
 
 						li = $('<li>');
 
@@ -289,7 +270,7 @@
 
 					that.modules.thumbs.append(ul);
 
-					that.modules.thumbs.fadeIn(that.config.speed.transition, function(){
+					that.modules.thumbs.fadeIn(that.config.speedTransition, function(){
 
 						that.animating.resolve();
 					});
@@ -339,7 +320,7 @@
 
 			this.modules.ctn.attr({
 
-				'class': this.config.classNames.ctn
+				'class': this.config.classCtn
 			});
 
 			this.$elem.append(this.modules.ctn);
@@ -358,20 +339,20 @@
 
 			this.modules.ctrl.attr({
 
-				'class': this.config.classNames.ctrl
+				'class': this.config.classCtrl
 			});
 
 			this.modules.ctrlPrev = $('<div>', {
 
 				'alt': 'Previous',
-				'class': this.config.classNames.ctrlPrev,
+				'class': this.config.classPrev,
 				'title': 'Previous'
 			});
 
 			this.modules.ctrlNext = $('<div>', {
 
 				'alt': 'Next',
-				'class': this.config.classNames.ctrlNext,
+				'class': this.config.classNext,
 				'title': 'Next'
 			});
 
@@ -415,7 +396,7 @@
 
 			that.modules.thumbs.attr({
 
-				'class': that.config.classNames.thumbs
+				'class': that.config.classThumbs
 			});
 
 			that.modules.ctn.append(that.modules.thumbs);
@@ -432,16 +413,16 @@
 				for(i = 0, l = items.length; i < l; ++i){
 
 					//if thumbs image path exists
-					if(that.config.path.thumbs){
+					if(that.config.pathThumbs){
 
-						src = that.config.path.thumbs + items[i].img;
+						src = that.config.pathThumbs + items[i].img;
 					}
 					else{
 
-						src = that.config.path.root + items[i].img;
+						src = that.config.pathRoot + items[i].img;
 					}
 
-					href = that.config.path.root + items[i].img;
+					href = that.config.pathRoot + items[i].img;
 
 					li = $('<li>');
 
@@ -485,8 +466,8 @@
 			//create pages object
 			that.pages = {
 
-				current: that.config.pages.start,
-				show: that.config.pages.show,
+				current: that.config.pageStart,
+				show: that.config.pageShow,
 				count: that.items.length,
 				total: undefined
 			}

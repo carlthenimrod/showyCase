@@ -6,7 +6,7 @@ showyCase dynamically generates a showcase based on a JSON file that categorizes
 
 ### Release info:
 
-The current release is version 0.7. This is the inital release and more features and updates are planned.
+The current release is version 0.75. This is the inital release and more features and updates are planned.
 
 
 ### Examples:
@@ -20,14 +20,6 @@ Add a JavaScript object to achieve additional functionality, some options are ne
 
 	$('#element').showyCase({
 		html5: false,
-		pages: {
-			show: 20
-		},
-		speed: {
-
-			load: 400,
-			transition: 300
-		}
 	});
 
 
@@ -39,28 +31,47 @@ Here is a brief rundown of all the different options.
 **ajax**: Accepts object, controls Ajax config settings, for more information consult the jQuery API.
 
 	$('#element').showyCase({
-		ajax: {
+		ajax:
 			cache: false,
 			dataType: 'json',
 			dataUrl: 'json/jquery.showyCase.json'
-		}
 	});
 
-**classNames**: Accepts a object, holds all of the class names. Allows you to change the name of the classes for the gallery.
+**ajaxCache**: Accepts a boolean, controls whether to cache the Ajax request, for more information consult the jQuery API.
 
 	$('#element').showyCase({
-		classNames: {
-			thumbs: 'sc-thumbs'
-		}
+		ajaxCache: false
+	});
+
+**ajaxDataType**: Accepts a string, controls the data type to be used by the Ajax request, for more information consult the jQuery API.
+
+	$('#element').showyCase({
+		ajaxDataType: 'json'
+	});
+
+**ajaxDataUrl**: Accepts a string, holds location of file to be used, for more information consult the jQuery API.
+
+	$('#element').showyCase({
+		ajaxDataUrl: 'json/jquery.showyCase.json'
+	});			
+
+**class Options**: Accepts a string, holds CSS class names. Allows you to change the name of the classes.
+
+	$('#element').showyCase({
+		classCtn: 'sc-ctn',
+		classCtrl: 'sc-ctrl',
+		classPrev: 'sc-prev',
+		classNext: 'sc-next',
+		classThumbs: 'sc-thumbs'
 	});
 
 List of renameable CSS selectors with their default values:
 
-	- ctn: 'sc-ctn'
-	- ctrl: 'sc-ctrl'
-	- ctrlPrev: 'sc-prev'
-	- ctrlNext: 'sc-next'
-	- thumbs: 'sc-thumbs'
+	- classCtn: 'sc-ctn',
+	- classCtrl: 'sc-ctrl',
+	- classPrev: 'sc-prev',
+	- classNext: 'sc-next',
+	- classThumbs: 'sc-thumbs'
 
 **html5**: Accepts a boolean value, true creates articles/sections/nav elements, alternatively false creates divs, defaults to true.
 
@@ -78,37 +89,42 @@ List of selectable strings (more options coming)
 
 	- 'blurbGallery' : Sends to 'gallery.html' in same directory with PHP variable to be processed by blurbGallery plugin.
 
-**pages**: Accepts a object, contains options for the pagination system, show controls if pages are used altogether, per controls how many items per page.
+**Page Options**: Accepts a number, contains options for the pagination system, pageShow controls if pages are used altogether, pagePer controls how many items per page.
 
 	$('#element').showyCase({
-		pages: {
-			show: start,
-			per: false
-		}
+		pageShow: 18,
+		pageStart: 0
 	});
 
-**path**: Accepts a object, holds all of the paths for images. If full/thumb is set to false, it falls back to root path.
+List of adjustable options:
+
+	- pageShow: 18,
+	- pageStart: 0
+
+**Path Options**: Accepts a string, holds all of the paths for images. If full/thumb is set to false, it falls back to root path.
 
 	$('#element').showyCase({
-		path: {
-			full: false,
-			root: 'img/',
-			thumbs: 'img/thumbs/'
-		}
+		pathFull: false,
+		pathRoot: 'img/',
+		pathThumbs: 'img/thumbs/'
 	});
 
 List of editable paths:
 
-	- full: false,
-	- root: 'img/'
-	- thumbs: 'img/thumbs/'
+	- pathFull: false
+	- pathRoot: 'img/'
+	- pathThumbs: 'img/thumbs/'
 
-**speed**: Accepts an object, controls the speed of the fade and load transitions in milliseconds.
+**Speed Options**: Accepts a number, sets the speeds in milliseconds for the animations.
 
 	$('#element').showyCase({
-		load: 300,
-		transition: 150
+		speedLoad: 300,
+		speedTransition: 150
 	});
+
+List of adjustable speeds:
+	- speedLoad: 300
+	- speedTransition: 150
 
 
 ### Build Contents:
