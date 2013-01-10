@@ -16,7 +16,7 @@ Basic showyCase usuage on an empty element, the plugin will do the rest.
 
 	$('#element').showyCase();
 
-Add a JavaScript object to achieve additional functionality, some options are nested in objects.
+Add a JavaScript object to achieve additional functionality.
 
 	$('#element').showyCase({
 		html5: false,
@@ -27,15 +27,6 @@ Add a JavaScript object to achieve additional functionality, some options are ne
 ----
 
 Here is a brief rundown of all the different options.
-
-**ajax**: Accepts object, controls Ajax config settings, for more information consult the jQuery API.
-
-	$('#element').showyCase({
-		ajax:
-			cache: false,
-			dataType: 'json',
-			dataUrl: 'json/jquery.showyCase.json'
-	});
 
 **ajaxCache**: Accepts a boolean, controls whether to cache the Ajax request, for more information consult the jQuery API.
 
@@ -52,7 +43,7 @@ Here is a brief rundown of all the different options.
 **ajaxDataUrl**: Accepts a string, holds location of file to be used, for more information consult the jQuery API.
 
 	$('#element').showyCase({
-		ajaxDataUrl: 'json/jquery.showyCase.json'
+		ajaxDataUrl: 'json/jquery.items.json'
 	});			
 
 **class Options**: Accepts a string, holds CSS class names. Allows you to change the name of the classes.
