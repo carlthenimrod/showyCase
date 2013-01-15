@@ -6,7 +6,7 @@ showyCase dynamically generates a showcase based on a JSON file that categorizes
 
 ### Release info:
 
-The current release is version 0.75. This is the inital release and more features and updates are planned.
+The current release is version 0.85. This is the inital release and more features and updates are planned.
 
 
 ### Examples:
@@ -69,6 +69,12 @@ List of renameable CSS selectors with their default values:
 	$('#element').showyCase({
 		html5: true
 	});
+
+**multiJSON**: Accepts a boolean, defaults to false which causes plugin to search for a single JSON file. If set to true, plugin searchs for multiple files that are linked by the inital JSON file. 
+
+	$('#element').showyCase({
+		multiJSON: false
+	});	
 
 **onItemClick**: Accepts a string, determines the action to take place on thumb click, defaults to false
 

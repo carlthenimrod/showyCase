@@ -1,7 +1,7 @@
 /*!
  * jQuery showyCase Plugin
  * Author: Carl Dawson
- * Version: 0.7
+ * Version: 0.85
  */
 ;(function($, win, doc, undefined){
 
@@ -50,14 +50,15 @@
 
 			ajaxCache: false,
 			ajaxDataType: 'json',
-			ajaxDataUrl: 'json/jquery.items.json',
+			ajaxDataUrl: 'json/jquery.single.json',
 			classCtn: 'sc-ctn',
 			classCtrl: 'sc-ctrl',
 			classPrev: 'sc-prev',
 			classNext: 'sc-next',
 			classThumbs: 'sc-thumbs',
-			onItemClick: false,
 			html5: true,
+			multiJSON: false,
+			onItemClick: false,
 			pageShow: 18,
 			pageStart: 0,
 			pathFull: false,
@@ -82,14 +83,32 @@
 			})
 			.then(function(data){
 
-				//set data variable
-				that.data = data.items;
+				if(that.config.multiJSON){
 
-				//find all items, store in items
-				that.items = that.utils.findAllItems(that.data);
+					//store categories
+					that.categories = data.categories;
 
-				//resolve deferred
-				dfd.resolve();
+					//find data
+					$.when(that.findData()).then(function(){
+
+						//find all items, store in items
+						that.items = that.utils.findAllItems(that.data);		
+
+						//resolve deferred
+						dfd.resolve();
+					});
+				}
+				else{
+
+					//set data variable
+					that.data = data.items;
+
+					//find all items, store in items
+					that.items = that.utils.findAllItems(that.data);
+
+					//resolve deferred
+					dfd.resolve();
+				}
 
 			}, function(){
 
@@ -153,43 +172,7 @@
 					}
 				}
 			});
-
-			that.modules.thumbs.on('hover', 'li', function(){
-
-				//create pop-up
-				that.eventCreatePopUp();
-			});
-
-			that.modules.thumbs.on('click', 'li', function(e){
-
-				//click event
-				that.eventClick($(this));
-
-				//prevent default
-				e.preventDefault();
-			});			
 		},
-
-		eventCreatePopUp: function(){
-		},
-
-		eventClick: function(el){
-
-			var that = this,
-				selected;
-
-			if(that.config.onImgClick == 'blurbGallery'){
-
-				//find selected
-				selected = that.utils.formatText(el.find('a').attr('title'));
-
-				window.location.href = 'gallery.php?selected=' + selected;
-			}
-			else{
-
-				window.location.href = el.find('a').attr('href');
-			}
-		},		
 
 		eventRefreshThumbs: function(){
 
@@ -239,7 +222,18 @@
 							src = that.config.pathRoot + items[i].img;
 						}
 
-						href = that.config.pathRoot + items[i].img;
+						if(that.config.onImgClick == 'blurbGallery'){
+
+							//find selected
+							selected_cat = that.utils.formatText(items[i].cat);
+							selected_img = that.utils.formatText(items[i].title);
+
+							href = 'gallery.php?cat=' + selected_cat + '&img=' + selected_img;
+						}
+						else{
+
+							href = that.config.pathRoot + items[i].img;
+						}
 
 						li = $('<li>');
 
@@ -407,6 +401,8 @@
 
 				var i,
 					l,
+					selected_img,
+					selected_cat,
 					href,
 					src;				
 
@@ -422,7 +418,18 @@
 						src = that.config.pathRoot + items[i].img;
 					}
 
-					href = that.config.pathRoot + items[i].img;
+					if(that.config.onImgClick == 'blurbGallery'){
+
+						//find selected
+						selected_cat = that.utils.formatText(items[i].cat);
+						selected_img = that.utils.formatText(items[i].title);
+
+						href = 'gallery.php?cat=' + selected_cat + '&img=' + selected_img;
+					}
+					else{
+
+						href = that.config.pathRoot + items[i].img;
+					}
 
 					li = $('<li>');
 
@@ -459,6 +466,55 @@
 			return dfd.promise();
 		},
 
+		findData: function(){
+
+			var that = this,
+				promises = [],
+				dfd = $.Deferred(),
+				i,
+				l;
+
+			//create empty array
+			that.data = [];
+
+			for(i = 0, l = that.categories.length; i < l; ++i){
+
+				(function(){
+
+					//create deferred
+					var deferred = $.Deferred();
+
+					//add to promises
+					promises.push(deferred);
+
+					$.ajax({
+
+						//ajax config
+						async: false,
+						cache: that.config.ajaxCache,
+						dataType: that.config.ajaxDataType,
+						url: 'json/' + that.utils.formatText(that.categories[i].id) + '.json'
+					})
+					.then(function(data){
+
+						that.data.push(data.items);
+
+						//resolve deferred
+						deferred.resolve();
+
+					}, function(){
+
+						//reject deferred
+						deferred.reject();
+					});
+				})();
+			}
+
+			$.when.apply(this, promises).done(dfd.resolve);
+
+			return dfd.promise();
+		},
+
 		createPages: function(){
 
 			var that = this;
@@ -483,9 +539,13 @@
 				var i,
 					l,
 					item,
-					items = [];
+					items = [],
+					cat;
 
 				for(i = 0, l = data.length; i < l; ++i){
+
+					//store category
+					cat = data[i].id;
 
 					//store item
 					item = data[i].item;
@@ -496,6 +556,8 @@
 							l;
 
 						for(i = 0, l = item.length; i < l; ++i){
+
+							item[i].cat = cat;
 
 							//add item to items array
 							items.push(item[i]);
